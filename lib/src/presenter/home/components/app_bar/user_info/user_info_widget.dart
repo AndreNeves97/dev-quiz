@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 import '../../../../../../core/core.dart';
+import '../../../../../domain/entities/user.dart';
 
 class UserInfoWidget extends StatelessWidget {
+  final User user;
+
   const UserInfoWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override
@@ -16,8 +20,8 @@ class UserInfoWidget extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            UserWelcomeWidget(),
-            UserImageWidget(),
+            UserWelcomeWidget(user: user),
+            UserImageWidget(user: user),
           ],
         ),
       ),
@@ -26,6 +30,13 @@ class UserInfoWidget extends StatelessWidget {
 }
 
 class UserWelcomeWidget extends StatelessWidget {
+  final User user;
+
+  const UserWelcomeWidget({
+    Key? key,
+    required this.user,
+  }) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Text.rich(
@@ -33,7 +44,7 @@ class UserWelcomeWidget extends StatelessWidget {
         text: 'Olá, ',
         style: AppTextStyles.title,
         children: [
-          TextSpan(text: 'André', style: AppTextStyles.titleBold),
+          TextSpan(text: user.name, style: AppTextStyles.titleBold),
         ],
       ),
     );
@@ -41,8 +52,11 @@ class UserWelcomeWidget extends StatelessWidget {
 }
 
 class UserImageWidget extends StatelessWidget {
+  final User user;
+
   const UserImageWidget({
     Key? key,
+    required this.user,
   }) : super(key: key);
 
   @override

@@ -8,7 +8,9 @@ class QuestionAnswer {
   QuestionAnswer({
     required this.question,
     required this.answer,
-  }) : assert(
-          question.answers.contains(answer),
-        );
+  });
+
+  // : assert(
+  //         question.answers.contains(answer),
+  //       );
 }

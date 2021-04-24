@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 
+import './level_buttons/level_buttons_widget.dart';
 import '../../../../../core/core.dart';
 import '../../../../domain/entities/available_levels.dart';
-import './level_buttons/level_buttons_widget.dart';
+import '../../../../domain/entities/quiz.dart';
 import 'quiz_card/quiz_card_widget.dart';
 
 class BodyWidget extends StatelessWidget {
+  final List<Quiz> quizzes;
+
+  const BodyWidget({Key? key, required this.quizzes}) : super(key: key);
+
+  List<Widget> get quizWidgetsList {
+    return quizzes.map(quizObjectToCardWidget).toList();
+  }
+
+  QuizCardWidget quizObjectToCardWidget(Quiz quiz) {
+    return QuizCardWidget(quiz: quiz);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,14 +36,7 @@ class BodyWidget extends StatelessWidget {
                   childAspectRatio: (contraints.maxWidth / 2 - 56) / 150,
                   padding:
                       const EdgeInsets.only(left: 20, right: 20, bottom: 24),
-                  children: [
-                    QuizCardWidget(),
-                    QuizCardWidget(),
-                    QuizCardWidget(),
-                    QuizCardWidget(),
-                    QuizCardWidget(),
-                    QuizCardWidget(),
-                  ],
+                  children: quizWidgetsList,
                 );
               },
             ),
