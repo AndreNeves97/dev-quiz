@@ -68,7 +68,7 @@ class UserImageWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         border: Border.all(width: 2, color: AppColors.darkPurple),
         image: DecorationImage(
-          image: AssetImage(AppImages.user),
+          image: NetworkImage(user.photoUrl),
         ),
       ),
     );

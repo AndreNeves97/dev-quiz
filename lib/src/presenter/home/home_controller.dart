@@ -1,3 +1,5 @@
+import 'package:dev_quiz/src/infra/repositories/quiz_repository.dart';
+import 'package:dev_quiz/src/infra/repositories/user_repository.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/core.dart';
@@ -16,112 +18,22 @@ class HomeController {
   set state(HomeState state) => stateNotifier.value = state;
   HomeState get state => stateNotifier.value;
 
+  final userRepository = UserRepository();
+  final quizRepository = QuizRepository();
+
   User? user;
 
   List<Quiz>? quizzes;
 
-  void getUser() async {
+  Future<void> getUser() async {
     state = HomeState.loading;
-    await Future.delayed(Duration(seconds: 2));
-
-    user = User(
-      name: 'André Neves',
-      photoUrl: AppImages.user,
-      score: 0,
-    );
-
+    user = await userRepository.getUser();
     state = HomeState.sucess;
   }
 
-  void getQuizzes() async {
+  Future<void> getQuizzes() async {
     state = HomeState.loading;
-    await Future.delayed(Duration(seconds: 2));
-
-    quizzes = [
-      Quiz(
-        title: 'Introdução ao Flutter',
-        questions: [
-          Question(
-            title: 'O que o Flutter faz em sua totalidade?',
-            answers: [
-              Answer(
-                title: 'Kit de desenvolvimento de interface de usuário',
-              ),
-              Answer(
-                title:
-                    'Possibilita a criação de aplicativos compilados nativamente',
-                isRight: true,
-              ),
-              Answer(title: 'Acho que é uma marca de café do Himalaia'),
-              Answer(
-                  title:
-                      'Possibilita a criação de desktops que são muito incríveis'),
-            ],
-          ),
-          Question(
-            title: 'O que o Flutter faz em sua totalidade?',
-            answers: [
-              Answer(
-                title: 'Kit de desenvolvimento de interface de usuário',
-              ),
-              Answer(
-                title:
-                    'Possibilita a criação de aplicativos compilados nativamente',
-                isRight: true,
-              ),
-              Answer(title: 'Acho que é uma marca de café do Himalaia'),
-              Answer(
-                  title:
-                      'Possibilita a criação de desktops que são muito incríveis'),
-            ],
-          ),
-          Question(
-            title: 'O que o Flutter faz em sua totalidade?',
-            answers: [
-              Answer(
-                title: 'Kit de desenvolvimento de interface de usuário',
-              ),
-              Answer(
-                title:
-                    'Possibilita a criação de aplicativos compilados nativamente',
-                isRight: true,
-              ),
-              Answer(title: 'Acho que é uma marca de café do Himalaia'),
-              Answer(
-                  title:
-                      'Possibilita a criação de desktops que são muito incríveis'),
-            ],
-          )
-        ],
-        questionsAnswers: [
-          QuestionAnswer(
-            question: Question(
-              title: 'O que o Flutter faz em sua totalidade?',
-              answers: [
-                Answer(
-                  title: 'Kit de desenvolvimento de interface de usuário',
-                ),
-                Answer(
-                  title:
-                      'Possibilita a criação de aplicativos compilados nativamente',
-                  isRight: true,
-                ),
-                Answer(title: 'Acho que é uma marca de café do Himalaia'),
-                Answer(
-                    title:
-                        'Possibilita a criação de desktops que são muito incríveis'),
-              ],
-            ),
-            answer: Answer(
-              title: 'Kit de desenvolvimento de interface de usuário',
-            ),
-          ),
-        ],
-        level: Level.facil,
-        assetImage: '',
-      )
-    ];
-
+    quizzes = await quizRepository.getQuizzes();
     state = HomeState.sucess;
   }
 }

@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
   final String title;
-  final bool isWrong;
+  final bool isRight;
   final bool isSelected;
 
   const AnswerWidget({
     Key? key,
     required this.title,
-    required this.isWrong,
+    required this.isRight,
     required this.isSelected,
   }) : super(key: key);
 
@@ -18,7 +18,7 @@ class AnswerWidget extends StatelessWidget {
       return AppColors.white;
     }
 
-    if (isWrong) {
+    if (!isRight) {
       return AppColors.lightRed;
     }
 
@@ -30,7 +30,7 @@ class AnswerWidget extends StatelessWidget {
       return AppColors.border;
     }
 
-    if (isWrong) {
+    if (!isRight) {
       return AppColors.red;
     }
 
@@ -59,7 +59,7 @@ class AnswerWidget extends StatelessWidget {
           SizedBox(width: 15),
           SelectBoxWidget(
             isSelected: isSelected,
-            isWrong: isWrong,
+            isRight: isRight,
           )
         ],
       ),
@@ -70,11 +70,11 @@ class AnswerWidget extends StatelessWidget {
 class SelectBoxWidget extends StatelessWidget {
   const SelectBoxWidget({
     Key? key,
-    required this.isWrong,
+    required this.isRight,
     required this.isSelected,
   }) : super(key: key);
 
-  final bool isWrong;
+  final bool isRight;
   final bool isSelected;
 
   Color get _backgroundColor {
@@ -82,7 +82,7 @@ class SelectBoxWidget extends StatelessWidget {
       return AppColors.white;
     }
 
-    if (isWrong) {
+    if (!isRight) {
       return AppColors.darkRed;
     }
 
@@ -94,7 +94,7 @@ class SelectBoxWidget extends StatelessWidget {
       return AppColors.border;
     }
 
-    if (isWrong) {
+    if (!isRight) {
       return AppColors.darkRed;
     }
 

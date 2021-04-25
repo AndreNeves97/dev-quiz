@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void loadData() async {
-    controller.getUser();
+    await controller.getUser();
     controller.getQuizzes();
 
     controller.stateNotifier.addListener(() {
