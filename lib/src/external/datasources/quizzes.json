@@ -30,5 +30,37 @@
         "answer": {"index": 0}
       }
     ]
+  },
+  {
+    "title": "Desenvolvimento de aplicativos",
+    "assetImage": "laptop",
+    "level": "facil",
+    "questions": [
+      {
+        "title": "O que é mais importante na definição de escopo de um aplicativo",
+        "answers": [
+          {
+            "title": "A tecnologia a ser utilizada"
+          },
+          {
+            "title": "O objetivo e problema a ser resolvido com o projeto",
+            "isRight": true
+          },
+          {
+            "title": "A marca dos computadores utilizados no desenvolvimento"
+          },
+          {
+            "title": "A plataforma de repositórios GIT"
+          }
+        ]
+      }
+    ],
+
+    "questionsAnswers": [
+      {
+        "question": {"index": 0},
+        "answer": {"index": 0}
+      }
+    ]
   }
 ]

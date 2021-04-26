@@ -8,4 +8,8 @@ class AppImages {
   static String get trophy => "assets/images/trophy.png";
   static String get logo => "assets/images/logo.png";
   static String get user => "assets/images/user.jpeg";
+
+  static String getIconAssetUrl(String name) {
+    return 'assets/images/$name.png';
+  }
 }
