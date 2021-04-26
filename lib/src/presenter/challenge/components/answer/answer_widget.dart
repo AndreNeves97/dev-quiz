@@ -1,16 +1,20 @@
+import 'package:dev_quiz/src/domain/entities/answer.dart';
+
 import '../../../../../core/core.dart';
 import 'package:flutter/material.dart';
 
 class AnswerWidget extends StatelessWidget {
-  final String title;
-  final bool isRight;
+  final Answer answer;
   final bool isSelected;
+  final bool disabled;
+  final VoidCallback onTap;
 
   const AnswerWidget({
     Key? key,
-    required this.title,
-    required this.isRight,
+    required this.answer,
     required this.isSelected,
+    required this.disabled,
+    required this.onTap,
   }) : super(key: key);
 
   Color get _backgroundColor {
@@ -18,7 +22,7 @@ class AnswerWidget extends StatelessWidget {
       return AppColors.white;
     }
 
-    if (!isRight) {
+    if (!answer.isRight) {
       return AppColors.lightRed;
     }
 
@@ -30,7 +34,7 @@ class AnswerWidget extends StatelessWidget {
       return AppColors.border;
     }
 
-    if (!isRight) {
+    if (!answer.isRight) {
       return AppColors.red;
     }
 
@@ -39,29 +43,43 @@ class AnswerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 72,
-      padding: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: _backgroundColor,
-        borderRadius: BorderRadius.circular(10),
-        border: Border.fromBorderSide(
-          BorderSide(color: _borderColor),
-        ),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Expanded(
-            child: Text(title, style: AppTextStyles.body),
+    final borderRadius = BorderRadius.circular(10);
+
+    return IgnorePointer(
+      ignoring: disabled,
+      child: Container(
+        height: 72,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          border: Border.fromBorderSide(
+            BorderSide(color: _borderColor),
           ),
-          SizedBox(width: 15),
-          SelectBoxWidget(
-            isSelected: isSelected,
-            isRight: isRight,
-          )
-        ],
+        ),
+        child: Material(
+          borderRadius: borderRadius,
+          color: _backgroundColor,
+          child: InkWell(
+            borderRadius: borderRadius,
+            onTap: onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Expanded(
+                    child: Text(answer.title, style: AppTextStyles.body),
+                  ),
+                  SizedBox(width: 15),
+                  SelectBoxWidget(
+                    isSelected: isSelected,
+                    isRight: answer.isRight,
+                  )
+                ],
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

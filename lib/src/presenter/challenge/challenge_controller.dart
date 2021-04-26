@@ -8,21 +8,35 @@ class ChallengeController {
   final pageController = PageController();
 
   final currentQuestionNotifier = ValueNotifier<int>(0);
-  int get currentQuestion => currentQuestionNotifier.value;
-  set currentQuestion(int value) => currentQuestionNotifier.value = value;
+  int get currentQuestionIndex => currentQuestionNotifier.value;
+  set currentQuestionIndex(int value) => currentQuestionNotifier.value = value;
+
+  final finishedNotifier = ValueNotifier<bool>(false);
+  bool get finished => finishedNotifier.value;
+  set finished(bool value) => finishedNotifier.value = value;
+
+  bool get isOnLastQuestion {
+    return currentQuestionIndex == quiz.questions.length - 1;
+  }
 
   ChallengeController({required this.quiz}) {
     pageController.addListener(() {
-      currentQuestion = pageController.page!.toInt();
+      currentQuestionIndex = pageController.page!.toInt();
     });
   }
 
-  void nextPage() {
+  void nextQuestion() {
+    if (isOnLastQuestion) {
+      return;
+    }
+
     pageController.nextPage(
       duration: Duration(milliseconds: 250),
       curve: Curves.easeInOut,
     );
   }
 
-  void finish() {}
+  void finish() {
+    finished = true;
+  }
 }

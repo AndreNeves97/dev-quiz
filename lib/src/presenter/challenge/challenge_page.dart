@@ -1,3 +1,4 @@
+import 'package:dev_quiz/src/domain/entities/question.dart';
 import 'package:flutter/material.dart';
 
 import '../../domain/entities/quiz.dart';
@@ -28,15 +29,32 @@ class _ChallengePageState extends State<ChallengePage> {
     super.initState();
   }
 
+  Widget questionObjectToWidget(Question question) {
+    return QuizWidget(
+      question: widget.quiz.questions[controller.currentQuestionIndex],
+      onSelect: onSelectAnswer,
+    );
+  }
+
+  void onSelectAnswer(int index) {
+    if (controller.isOnLastQuestion) {
+      controller.finish();
+      return;
+    }
+
+    Future.delayed(Duration(milliseconds: 500)).then((value) {
+      controller.nextQuestion();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarWidget(controller: controller),
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: controller.pageController,
-        children: widget.quiz.questions
-            .map((question) => QuizWidget(question: widget.quiz.questions[0]))
-            .toList(),
+        children: widget.quiz.questions.map(questionObjectToWidget).toList(),
       ),
       bottomNavigationBar: SafeArea(
         child: BottomNavigationWidget(

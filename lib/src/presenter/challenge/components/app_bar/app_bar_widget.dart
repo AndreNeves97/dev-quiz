@@ -37,10 +37,16 @@ class AppBarContainerWidget extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
             child: ValueListenableBuilder<int>(
               valueListenable: controller.currentQuestionNotifier,
-              builder: (context, value, _) => QuestionIndicatorWidget(
-                currentQuestion: value,
-                questions: controller.quiz.questions,
-              ),
+              builder: (context, currentQuestion, _) {
+                return ValueListenableBuilder<bool>(
+                  valueListenable: controller.finishedNotifier,
+                  builder: (context, finished, _) => QuestionIndicatorWidget(
+                    currentQuestion: currentQuestion,
+                    questions: controller.quiz.questions,
+                    finished: finished,
+                  ),
+                );
+              },
             ),
           ),
         ],

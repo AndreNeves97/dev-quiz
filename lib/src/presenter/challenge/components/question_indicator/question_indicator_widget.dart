@@ -7,18 +7,26 @@ import '../../../components/progress_indicator/app_linear_progress_indicador_wid
 class QuestionIndicatorWidget extends StatelessWidget {
   final int currentQuestion;
   final List<Question> questions;
+  final bool finished;
 
   const QuestionIndicatorWidget({
     Key? key,
     required this.currentQuestion,
     required this.questions,
+    required this.finished,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final currentQuestionText =
         (currentQuestion + 1).toString().padLeft(2, '0');
-    final totalQuestionsText = questions.length;
+    final totalQuestionsText = questions.length.toString().padLeft(2, '0');
+
+    var progressValue = currentQuestion / questions.length;
+
+    if (finished) {
+      progressValue = 1;
+    }
 
     return Column(
       children: [
@@ -37,7 +45,7 @@ class QuestionIndicatorWidget extends StatelessWidget {
         ),
         SizedBox(height: 16),
         AppLinearProgressIndicatorWidget(
-          value: (currentQuestion) / questions.length,
+          value: progressValue,
         )
       ],
     );

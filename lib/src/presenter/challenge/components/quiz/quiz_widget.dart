@@ -5,24 +5,51 @@ import '../../../../domain/entities/answer.dart';
 import '../../../../domain/entities/question.dart';
 import '../answer/answer_widget.dart';
 
-class QuizWidget extends StatelessWidget {
+class QuizWidget extends StatefulWidget {
   final Question question;
+  final Function(int) onSelect;
 
-  const QuizWidget({Key? key, required this.question}) : super(key: key);
+  const QuizWidget({
+    Key? key,
+    required this.question,
+    required this.onSelect,
+  }) : super(key: key);
+
+  @override
+  _QuizWidgetState createState() => _QuizWidgetState();
+}
+
+class _QuizWidgetState extends State<QuizWidget> {
+  int? selectedAnswerIndex;
 
   List<Widget> get answersWidgetsList {
-    return question.answers.map(answerObjectToWidget).toList();
+    return [
+      for (int i = 0; i < widget.question.answers.length; i++)
+        answerObjectToWidget(
+          widget.question.answers[i],
+          i,
+        )
+    ];
   }
 
-  Widget answerObjectToWidget(Answer answer) {
+  Widget answerObjectToWidget(Answer answer, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       child: AnswerWidget(
-        title: answer.title,
-        isRight: false,
-        isSelected: false,
+        answer: answer,
+        isSelected: selectedAnswerIndex == index,
+        disabled: selectedAnswerIndex != null,
+        onTap: () => selectAnswer(index),
       ),
     );
+  }
+
+  void selectAnswer(int index) {
+    setState(() {
+      selectedAnswerIndex = index;
+    });
+
+    widget.onSelect(index);
   }
 
   @override
@@ -39,7 +66,7 @@ class QuizWidget extends StatelessWidget {
               right: 20,
             ),
             child: Text(
-              question.title,
+              widget.question.title,
               style: AppTextStyles.heading20,
             ),
           ),
