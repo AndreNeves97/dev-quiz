@@ -1,6 +1,7 @@
-import 'package:dev_quiz/src/domain/entities/quiz.dart';
 import 'package:flutter/material.dart';
 
+import '../../domain/entities/quiz.dart';
+import 'challenge_controller.dart';
 import 'components/app_bar/app_bar_widget.dart';
 import 'components/bottom_navigation/bottom_navigation_widget.dart';
 import 'components/quiz/quiz_widget.dart';
@@ -18,13 +19,29 @@ class ChallengePage extends StatefulWidget {
 }
 
 class _ChallengePageState extends State<ChallengePage> {
+  late ChallengeController controller;
+
+  @override
+  void initState() {
+    controller = ChallengeController(quiz: widget.quiz);
+
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarWidget(),
-      body: QuizWidget(question: widget.quiz.questions[0]),
+      appBar: AppBarWidget(controller: controller),
+      body: PageView(
+        controller: controller.pageController,
+        children: widget.quiz.questions
+            .map((question) => QuizWidget(question: widget.quiz.questions[0]))
+            .toList(),
+      ),
       bottomNavigationBar: SafeArea(
-        child: BottomNavigationWidget(),
+        child: BottomNavigationWidget(
+          controller: controller,
+        ),
       ),
     );
   }

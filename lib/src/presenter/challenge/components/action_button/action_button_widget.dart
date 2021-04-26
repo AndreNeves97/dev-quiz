@@ -47,7 +47,7 @@ class ActionButtonWidget extends StatelessWidget {
           ),
           overlayColor: MaterialStateProperty.all(overlayColor),
         ),
-        onPressed: () {},
+        onPressed: onTap,
         child: Text(
           label,
           style: AppTextStyles.heading15.copyWith(color: textColor),
